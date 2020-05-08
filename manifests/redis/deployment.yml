@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: mysql
+        image: redis
+        ports:
+        - containerPort: 6379
+       # volumeMounts:
+       # - mountPath: /var/lib/mysql/data
+       #   name: redis-data
+       #   readOnly: false
+      #volumes:
+      #- name: redis-data
+      #  hostPath:
+      #    path: /data/redis

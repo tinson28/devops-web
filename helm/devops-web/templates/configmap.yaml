@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "devops-web.fullname" . }}-config
+  labels:
+    app: {{ include "devops-web.name" . }}
+    environment: {{ .Values.custom.deployment.environment }}
+data:
+  VUE_APP_APISERVER: $VUE_APP_APISERVER
+  nginx.conf: |
+    server {
+        listen       80;
+        server_name  localhost;
+        set_real_ip_from 127.0.0.1;
+        set_real_ip_from 10.0.0.0/8;
+        real_ip_header X-Forwarded-For;
+        allow 127.0.0.1;
+        allow 40.123.216.233;
+        allow 40.83.101.210;
+        allow 113.100.137.50; #SZ office 10M
+        allow 103.126.24.0/24; # SZ office SDWan
+        allow 218.255.20.0/24; # HK 14/F
+        allow 223.255.148.0/24; #HK office VPN 14/F
+        deny all;
+        # location ~ ^/(api|auth|media) {
+        #     resolver kube-dns.kube-system.svc.cluster.local valid=5s;
+        #     set $servers {{ .Values.env.BACKEN_API }};
+        #     proxy_http_version 1.1;
+        #     proxy_pass http://$servers$request_uri;
+
+        # }
+        # location ~ ^/websocket {
+        #     resolver kube-dns.kube-system.svc.cluster.local valid=5s;
+        #     set $servers {{ .Values.env.BACKEN_API }};
+        #     proxy_pass http://$servers$request_uri;
+        #     proxy_set_header X-Real_IP $remote_addr;
+        #     proxy_set_header Host $host;
+        #     proxy_set_header X_Forward_For $proxy_add_x_forwarded_for;
+        #     proxy_http_version 1.1;
+        #     proxy_set_header Upgrade $http_upgrade;
+        #     proxy_set_header Connection 'upgrade';
+        # }
+        location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+            try_files $uri $uri/ /index.html;
+        }
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }

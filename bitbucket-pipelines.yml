@@ -1,0 +1,141 @@
+image: ntops/k8s-builder:18.5.0
+options:
+  docker: true
+# caches:
+#   - docker
+#   - node
+
+aliases:
+  - &defineEnvVar |
+    export STACK_NAME="$APP_NAME-$ENVIRONMENT"
+    export K8_DEPLOYMENT_STRATEGY=RollingUpdate
+    export IMAGE_TAG="$BITBUCKET_BRANCH-build.$BITBUCKET_BUILD_NUMBER"
+    export APP_NAME="$APP_NAME-$ENVIRONMENT" 
+    export IMAGE_REPO_ENDPOINT="$AZ_CR_NAME.azurecr.io"
+    export IMAGE_REPO="$IMAGE_REPO_ENDPOINT/$BITBUCKET_REPO_SLUG"
+    # if [ $BITBUCKET_BRANCH != "master" ]; then export AZ_CR_NAME=$AZ_CR_NAME_TEST  export AZ_CR_PASSWORD=$AZ_CR_PASSWORD_TEST; fi
+    # echo $AZ_CR_NAME 
+  - &authGCP |
+    echo $GCP_K8_DEPLOYER_KEY > key.json
+    gcloud auth activate-service-account $GCP_K8_DEPLOYER --key-file=key.json
+    gcloud container clusters get-credentials $GCP_K8_CLUSTER_NAME --zone=$GCP_K8_CLUSTER_ZONE --project=$GCP_PROJECT_ID
+    kubectl config set-context $(kubectl config current-context) --namespace=$GCP_K8_NAMESPACE
+    cat key.json | docker login -u _json_key --password-stdin https://gcr.io
+  - &authAzure |
+    export K8S_REPO_PULL_SECRET=$AZ_K8S_REPO_PULL_SECRET
+    echo $AZ_K8_DEPLOYER_KEY |base64 --decode > az_auth.pem
+    az login --service-principal -u $AZ_SP_URL -p az_auth.pem --tenant $AZ_AD_TENANT
+    az acr login --name $AZ_CR_NAME
+    az aks get-credentials --resource-group $AZ_RESOURCE_GROUP --name $AZ_AKS_NAME
+    kubectl config set-context $(kubectl config current-context) --namespace=$AZ_K8_NAMESPACE
+  - &prodVersionCheck |
+    if [ $(git tag --points-at HEAD) ]
+    then
+      export IMAGE_TAG="$(git tag --points-at HEAD)"
+    else
+      echo "No revision tag found. Please tag you existing branch in semantic versioning e.g v1.0.0"
+      exit 1
+    fi
+  - &buildSource |
+    npm install
+    npm run build
+  - &buildDockerImage |
+    docker build -t $IMAGE_REPO:$IMAGE_TAG .
+    docker push $IMAGE_REPO:$IMAGE_TAG
+  - &prepareDeployment |
+    envsubst <./helm/devops-web/values.yaml.tpl >./helm/devops-web/values.build.yaml
+    cat ./helm/devops-web/values.build.yaml
+    helm init --client-only
+    # Dry run for error check
+    helm upgrade $STACK_NAME ./helm/devops-web/ -i -f ./helm/devops-web/values.build.yaml --dry-run --debug --reuse-values \
+    --set image.repository=$IMAGE_REPO \
+    --set image.tag=$IMAGE_TAG
+  - &deployHelm |
+    helm upgrade $STACK_NAME ./helm/devops-web/ -i -f ./helm/devops-web/values.build.yaml --reuse-values \
+    --set image.repository=$IMAGE_REPO \
+    --set image.tag=$IMAGE_TAG
+  - &notificationScript |
+    export MSG_URL="https://$APP_HOSTNAME"
+    chmod +x ./tools/pushToDingTalk.sh
+    ./tools/pushToDingTalk.sh
+
+pipelines:  
+  custom:
+    custom-image-to-deploy-develop: #name of this pipeline
+      - variables:          #list variable names under here
+          - name: MY_IMAGE_TAG
+      - step: 
+          name: Deploy to develop
+          deployment: dev
+          script:
+            - *defineEnvVar
+            - *authAzure
+            - export IMAGE_TAG=$MY_IMAGE_TAG
+            - *prepareDeployment
+            - *deployHelm
+    
+    custom-image-to-deploy-uat: #name of this pipeline
+      - variables:          #list variable names under here
+          - name: MY_IMAGE_TAG
+      - step: 
+          name: Deploy to develop
+          deployment: uat
+          script:
+            - *defineEnvVar
+            - *authAzure
+            - export IMAGE_TAG=$MY_IMAGE_TAG
+            - *prepareDeployment
+            - *deployHelm
+
+  branches:
+    develop:
+      - step:
+          name: first step 
+          services: 
+            - docker
+          script:
+            - echo 'this is first step'
+      - step:
+          name: second step 
+          services: 
+            - docker
+          script:
+            - echo 'this is second step'
+      - step:
+          name: Deploy to develop
+          deployment: dev
+          caches:
+            - docker
+          script:
+            - *defineEnvVar
+            - *authAzure
+            - *buildSource
+            - *buildDockerImage
+            - *prepareDeployment
+            - *deployHelm
+
+    uat:
+      - step:
+          name: first step 
+          services: 
+            - docker
+          script:
+            - echo 'this is first step'
+      - step:
+          name: second step 
+          services: 
+            - docker
+          script:
+            - echo 'this is second step'
+      - step:
+          name: Deploy to uat
+          deployment: uat
+          caches:
+            - docker
+          script:
+            - *defineEnvVar
+            - *authAzure
+            - *buildSource
+            - *buildDockerImage
+            - *prepareDeployment
+            - *deployHelm

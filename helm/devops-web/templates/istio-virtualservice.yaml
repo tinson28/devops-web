@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ include "devops-web.name" . }}
+  environment: {{ .Values.custom.deployment.environment }}
+spec:
+  hosts:
+  - {{ .Values.custom.deployment.hostname }}
+  gateways:
+  - {{ .Values.istio.gateway.name }}
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: {{ include "devops-web.fullname" . }}
+        port:
+          number: 80

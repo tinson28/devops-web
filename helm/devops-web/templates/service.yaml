@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "devops-web.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "devops-web.name" . }}
+    helm.sh/chart: {{ include "devops-web.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    environment: {{ .Values.custom.deployment.environment }}
+    version: {{ .Chart.AppVersion }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "devops-web.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

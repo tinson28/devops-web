@@ -1,0 +1,149 @@
+{
+  "id": "1438575",
+  "name": "devops-web",
+  "font_family": "iconfont",
+  "css_prefix_text": "el-icon-third",
+  "description": "devops-web",
+  "glyphs": [
+    {
+      "icon_id": "151331",
+      "name": "add",
+      "font_class": "add",
+      "unicode": "e661",
+      "unicode_decimal": 58977
+    },
+    {
+      "icon_id": "474981",
+      "name": "server",
+      "font_class": "server",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "963367",
+      "name": " file",
+      "font_class": "wenjian",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "1190744",
+      "name": "document",
+      "font_class": "document",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "1444515",
+      "name": "file-xml",
+      "font_class": "file-xml",
+      "unicode": "e739",
+      "unicode_decimal": 59193
+    },
+    {
+      "icon_id": "1555759",
+      "name": "add",
+      "font_class": "add1",
+      "unicode": "e68c",
+      "unicode_decimal": 59020
+    },
+    {
+      "icon_id": "5328033",
+      "name": "folder",
+      "font_class": "folder",
+      "unicode": "e690",
+      "unicode_decimal": 59024
+    },
+    {
+      "icon_id": "5328329",
+      "name": "file_blank",
+      "font_class": "file",
+      "unicode": "e692",
+      "unicode_decimal": 59026
+    },
+    {
+      "icon_id": "5332517",
+      "name": "file_code",
+      "font_class": "file_code",
+      "unicode": "e6a9",
+      "unicode_decimal": 59049
+    },
+    {
+      "icon_id": "5428254",
+      "name": "add",
+      "font_class": "add2",
+      "unicode": "e687",
+      "unicode_decimal": 59015
+    },
+    {
+      "icon_id": "7141701",
+      "name": "file-text",
+      "font_class": "file-text",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "7207758",
+      "name": "user",
+      "font_class": "user",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "7239764",
+      "name": "github",
+      "font_class": "github",
+      "unicode": "e732",
+      "unicode_decimal": 59186
+    },
+    {
+      "icon_id": "10329957",
+      "name": "document",
+      "font_class": "document1",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "10344733",
+      "name": "Document",
+      "font_class": "Document",
+      "unicode": "e777",
+      "unicode_decimal": 59255
+    },
+    {
+      "icon_id": "10793034",
+      "name": "add",
+      "font_class": "add3",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "11101781",
+      "name": "centos",
+      "font_class": "centos",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "11349000",
+      "name": "fileopen-f",
+      "font_class": "fileopen-f",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "11651053",
+      "name": "server",
+      "font_class": "server1",
+      "unicode": "e831",
+      "unicode_decimal": 59441
+    },
+    {
+      "icon_id": "12025554",
+      "name": "edit",
+      "font_class": "edit",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    }
+  ]
+}

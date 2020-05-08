@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: devops-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devops-web
+  template:
+    metadata:
+      labels:
+        app: devops-web
+    spec:
+      containers:
+      - name: devops-web
+        image: hub.hjtech.com:9080/library/devops-web:v4
+        ports:
+        - containerPort: 8003
+        command: ["cnpm","run","dev"]

@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: centos/mysql-57-centos7
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "123456"
+        volumeMounts:
+        - mountPath: /var/lib/mysql/data
+          name: mysql-data
+          readOnly: false
+          subPath: mysql
+      volumes:
+      - name: mysql-data
+        hostPath:
+          path: /data/mysql/data

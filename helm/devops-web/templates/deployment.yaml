@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "devops-web.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "devops-web.name" . }}
+    helm.sh/chart: {{ include "devops-web.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    version: {{ .Values.image.tag | quote }}
+    environment: {{ required ".custom.deployment.environment entry required!" .Values.custom.deployment.environment }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    {{ if eq .Values.custom.deployment.strategyType "RollingUpdate" }}
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    {{ end }}
+    type: {{ .Values.custom.deployment.strategyType | default "RollingUpdate" }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "devops-web.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      environment: {{ .Values.custom.deployment.environment }}
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: {{ .Values.istio.sidecar.inject | default false | quote }}
+        traffic.sidecar.istio.io/excludeOutboundIPRanges: "0.0.0.0/0" # Hack the egress service entry
+      labels:
+        app.kubernetes.io/name: {{ include "devops-web.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app: {{ include "devops-web.fullname" . }} # for istio
+        version: {{ .Values.image.tag | quote }} # for istio
+        scope: {{ .Values.custom.lable.scope }} # for ES log index
+        service: {{ .Values.custom.lable.service }} # for ES log index
+        appname: {{ include "devops-web.fullname" . }} # for ES log index
+        log-enable: {{ .Values.log.elk.enabled | quote }} # for ES log
+        environment: {{ .Values.custom.deployment.environment }}
+    spec:
+      terminationGracePeriodSeconds: 15
+      restartPolicy: Always
+      securityContext: {}
+      {{ if .Values.image.imagePullSecrets }}
+      imagePullSecrets:
+        - name: {{ .Values.image.imagePullSecrets }}
+      {{ end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.pod.port }}
+              protocol: TCP
+#          envFrom:
+#            - configMapRef:
+#                name: "{{ include "devops-web.fullname" . }}-config"
+          env:
+            - name: VUE_APP_APISERVER
+              valueFrom:
+                configMapKeyRef:
+                  key: VUE_APP_APISERVER
+                  name: {{ include "devops-web.fullname" . }}-config
+          volumeMounts:
+            - mountPath: "/etc/nginx/conf.d"
+              name: "nginx-config"
+          command: ["nginx", "-g", "daemon off;"]
+#          readinessProbe:
+#            tcpSocket:
+#              port: {{ .Values.pod.port }}
+#            initialDelaySeconds: 40
+#            periodSeconds: 3
+#          livenessProbe:
+#            tcpSocket:
+#              port: {{ .Values.pod.port }}
+#            initialDelaySeconds: 40
+#            periodSeconds: 3
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: "nginx-config"
+          configMap:
+            name: {{ include "devops-web.fullname" . }}-config
+            items:
+              - key: "nginx.conf"
+                path: "nginx.conf"
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

@@ -1,0 +1,32 @@
+apiVersion: config.istio.io/v1alpha2
+kind: handler
+metadata:
+  name: {{ include "devops-web.fullname" . }}-whitelistip
+spec:
+  compiledAdapter: listchecker
+  params:
+    # providerUrl: ordinarily black and white lists are maintained
+    # externally and fetched asynchronously using the providerUrl.
+    overrides: ["113.100.137.50","218.255.20.0/24","223.255.148.0/24"]  # overrides provide a static list
+    blacklist: false
+    entryType: IP_ADDRESSES
+---
+apiVersion: config.istio.io/v1alpha2
+kind: instance
+metadata:
+  name: {{ include "devops-web.fullname" . }}-sourceip
+spec:
+  compiledTemplate: listentry
+  params:
+    value: request.headers["x-envoy-external-address"]
+---
+apiVersion: config.istio.io/v1alpha2
+kind: rule
+metadata:
+  name: {{ include "devops-web.fullname" . }}-checkip
+spec:
+  match: (source.labels["istio"] == "ingressgateway" && destination.labels["app"] == {{ include "devops-web.fullname" . | quote}})
+  actions:
+  - handler: {{ include "devops-web.fullname" . }}-whitelistip
+    instances: [ {{ include "devops-web.fullname" . }}-sourceip ]
+---

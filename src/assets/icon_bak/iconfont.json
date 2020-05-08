@@ -1,0 +1,44 @@
+{
+  "id": "1438575",
+  "name": "devops-web",
+  "font_family": "iconfont",
+  "css_prefix_text": "el-icon-third",
+  "description": "devops-web",
+  "glyphs": [
+    {
+      "icon_id": "474981",
+      "name": "server",
+      "font_class": "server",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "7207758",
+      "name": "user",
+      "font_class": "user",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "7239764",
+      "name": "github",
+      "font_class": "github",
+      "unicode": "e732",
+      "unicode_decimal": 59186
+    },
+    {
+      "icon_id": "11101781",
+      "name": "centos",
+      "font_class": "centos",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "11651053",
+      "name": "server",
+      "font_class": "server1",
+      "unicode": "e831",
+      "unicode_decimal": 59441
+    }
+  ]
+}

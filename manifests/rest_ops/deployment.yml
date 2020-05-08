@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: devops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devops
+  template:
+    metadata:
+      labels:
+        app: devops
+    spec:
+      containers:
+      - name: devops
+        image: hub.hjtech.com:9080/library/rest_xops:v4
+        ports:
+        - containerPort: 8000
+        command: ["python","manage.py","runserver","0.0.0.0:8000"]
