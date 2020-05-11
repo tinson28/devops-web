@@ -1,7 +1,7 @@
 pipelines:
 
 
-  - name: npm_build
+  - name: devops_web_npm_build
     # Global configuration section for the entire pipeline
     configuration:
       environmentVariables:
