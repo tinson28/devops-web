@@ -1,0 +1,17 @@
+{
+  "presets": [
+    "@babel/preset-env"
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-transform-runtime",
+    "transform-vue-jsx"
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "dynamic-import-node"
+      ]
+    }
+  }
+} 

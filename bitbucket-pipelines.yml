@@ -1,0 +1,52 @@
+pipelines:
+  default:
+    - step:
+        services:
+          - docker
+        name: "npm-pipe-test"
+        script:
+          # Install NPM package dependencies from Artifactory
+          - pipe: JfrogDev/artifactory-npm:0.3.2
+            variables:
+              ARTIFACTORY_URL: $ARTIFACTORY_URL
+              ARTIFACTORY_USER: $ARTIFACTORY_USER
+              ARTIFACTORY_PASSWORD: $ARTIFACTORY_PASSWORD
+              NPM_COMMAND: "install"
+              NPM_SOURCE_REPO: "devops-npm-remote"
+              BUILD_NAME: "npm-pipe-test"
+          # Run Tests
+          # - npm run build
+          # Publish NPM package to Artifactory
+          - pipe: JfrogDev/artifactory-npm:0.3.2
+            variables:
+              ARTIFACTORY_URL: $ARTIFACTORY_URL
+              ARTIFACTORY_USER: $ARTIFACTORY_USER
+              ARTIFACTORY_PASSWORD: $ARTIFACTORY_PASSWORD
+              NPM_COMMAND: "publish"
+              NPM_TARGET_REPO: "devops-npm-local"
+              BUILD_NAME: "npm-pipe-test"
+          # # Scan published build through Xray
+          # - pipe: JfrogDev/artifactory-xray-scan:0.2.7
+          #   variables:
+          #     ARTIFACTORY_URL: $ARTIFACTORY_URL
+          #     ARTIFACTORY_USER: $ARTIFACTORY_USER
+          #     ARTIFACTORY_PASSWORD: $ARTIFACTORY_PASSWORD
+          #     BUILD_NAME: "npm-pipe-test"
+          # Promote Build in Artifactory
+          - pipe: JfrogDev/artifactory-build-promotion:0.3.2
+            variables:
+              ARTIFACTORY_URL: $ARTIFACTORY_URL
+              ARTIFACTORY_USER: $ARTIFACTORY_USER
+              ARTIFACTORY_PASSWORD: $ARTIFACTORY_PASSWORD
+              TARGET_REPO: "devops-npm-stage-local"
+              STATUS: "Staged"
+              BUILD_NAME: "npm-pipe-test"
+          # Promote Build in Artifactory
+          - pipe: JfrogDev/artifactory-build-promotion:0.3.2
+            variables:
+              ARTIFACTORY_URL: $ARTIFACTORY_URL
+              ARTIFACTORY_USER: $ARTIFACTORY_USER
+              ARTIFACTORY_PASSWORD: $ARTIFACTORY_PASSWORD
+              TARGET_REPO: "devops-npm-prod-local"
+              STATUS: "Promoted"
+              BUILD_NAME: "npm-pipe-test"
