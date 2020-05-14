@@ -177,7 +177,8 @@ export default {
     },
     getALLCloudAccount(){
       if (Array.isArray(this.cloud_accounts) && this.cloud_accounts.length === 0) {
-        getCloudConfigs().then(res => {
+        const params={page:1,size:100}
+        getCloudConfigs(params).then(res => {
           this.cloud_accounts = res.results
         })
       }

@@ -14,5 +14,3 @@ kubectl logs -l istio-mixer-type=policy -n istio-system -c mixer
 
 enable istio auto injection
 kubectl label namespace default istio-injection=enabled
-
-end!!!!!

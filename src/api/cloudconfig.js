@@ -1,9 +1,10 @@
 import request from '@/utils/request'
 
-export function getCloudConfigs() {
+export function getCloudConfigs(params) {
   return request({
     url: 'api/cloudconfig/',
-    method: 'get'
+    method: 'get',
+    params
   })
 }
 
