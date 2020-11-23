@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-11-23T15:21:30.202Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36" etag="-_rr9wZZWyVJ9ODqrrWn" version="13.10.1" type="github">
+<mxfile host="app.diagrams.net" modified="2020-11-23T15:22:57.963Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36" etag="BmrMYtVPPqDNjH-DF8dC" version="13.10.1" type="github">
   <diagram id="6a731a19-8d31-9384-78a2-239565b7b9f0" name="Page-1">
     <mxGraphModel dx="1422" dy="1621" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#ffffff" math="0" shadow="0">
       <root>
@@ -91,13 +91,13 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="GO7fzhzILklxyF-hlyMG-175" value="npm build" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
-          <mxGeometry x="740" y="-370" width="120" height="60" as="geometry" />
+          <mxGeometry x="740" y="-370" width="130" height="60" as="geometry" />
         </mxCell>
         <mxCell id="GO7fzhzILklxyF-hlyMG-176" value="dockerbuild" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
-          <mxGeometry x="740" y="-300" width="120" height="60" as="geometry" />
+          <mxGeometry x="740" y="-300" width="130" height="60" as="geometry" />
         </mxCell>
         <mxCell id="GO7fzhzILklxyF-hlyMG-177" value="pushImageToJfrog" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
-          <mxGeometry x="740" y="-230" width="120" height="60" as="geometry" />
+          <mxGeometry x="740" y="-230" width="130" height="60" as="geometry" />
         </mxCell>
         <mxCell id="GO7fzhzILklxyF-hlyMG-178" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -106,7 +106,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="GO7fzhzILklxyF-hlyMG-179" value="dingTalkNotify" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
-          <mxGeometry x="740" y="-160" width="120" height="60" as="geometry" />
+          <mxGeometry x="740" y="-160" width="130" height="60" as="geometry" />
         </mxCell>
         <mxCell id="GO7fzhzILklxyF-hlyMG-181" value="yes" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="210" y="-433" width="40" height="20" as="geometry" />
