@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-11-24T12:44:44.026Z" agent="5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="O2AvsHniGFQIQVhIF8bH" version="13.10.1" type="github">
+<mxfile host="app.diagrams.net" modified="2020-11-26T14:50:22.801Z" agent="5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="ssFWS7pR4CdgabbiA-Ma" version="13.10.1" type="github">
   <diagram id="6a731a19-8d31-9384-78a2-239565b7b9f0" name="Page-1">
-    <mxGraphModel dx="2282" dy="2226" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#ffffff" math="0" shadow="0">
+    <mxGraphModel dx="2282" dy="2293" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -242,8 +242,8 @@
         <mxCell id="Xp_F8eB2ixiUf06vyhHW-45" value="notificationScript" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
           <mxGeometry x="115" y="216" width="130" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Xp_F8eB2ixiUf06vyhHW-48" value="branch：release" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="-64" y="-264" width="120" height="20" as="geometry" />
+        <mxCell id="Xp_F8eB2ixiUf06vyhHW-48" value="branch：release/x.x.x |&amp;nbsp; hotfix/x.x.x" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="-63" y="-264" width="199" height="20" as="geometry" />
         </mxCell>
         <mxCell id="Xp_F8eB2ixiUf06vyhHW-49" value="deployment：uat | sit | pilot | production" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;" vertex="1" parent="1">
           <mxGeometry y="-870" width="220" height="20" as="geometry" />
@@ -368,8 +368,8 @@
         <mxCell id="Xp_F8eB2ixiUf06vyhHW-94" value="&lt;b&gt;&lt;font style=&quot;font-size: 13px&quot;&gt;CICD for development&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;" vertex="1" parent="1">
           <mxGeometry x="645.5" y="-630" width="154.5" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="Xp_F8eB2ixiUf06vyhHW-95" value="&lt;b&gt;&lt;font style=&quot;font-size: 13px&quot;&gt;CI for release branch&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="-64" y="-284" width="154.5" height="20" as="geometry" />
+        <mxCell id="Xp_F8eB2ixiUf06vyhHW-95" value="&lt;b&gt;&lt;font style=&quot;font-size: 13px&quot;&gt;CI for release/hotfix branch&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="-64" y="-284" width="184" height="20" as="geometry" />
         </mxCell>
         <mxCell id="Xp_F8eB2ixiUf06vyhHW-97" value="&lt;b&gt;&lt;font style=&quot;font-size: 13px&quot;&gt;CD for uat | sit | pilot | production environment&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;" vertex="1" parent="1">
           <mxGeometry x="-5" y="-920" width="305" height="20" as="geometry" />
